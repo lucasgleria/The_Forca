@@ -28,17 +28,27 @@
 ```plaintext
 ├── src/
 │   ├── backend/
-│   │   ├── __init__.py
 │   │   ├── main.py
 │   │   ├── word_manager.py
-│   │   └── game_logic.py
+│   │   ├── game_logic.py
+│   │   ├── ranking_manager.py
+│   │   ├── models/
+│   │   └── utils/
 │   └── frontend/
 │       ├── index.html
-│       ├── style.scss
-│       └── app.js
-├── .gitignore
-├── requirements.txt
-└── README.md
+│       ├── app.js
+│       ├── components/
+│       ├── styles/
+│       └── assets/
+│           ├── images/
+│           ├── audio/
+│           └── fonts/
+├── docs/
+│   ├── documentation.md
+│   ├── documentation-dev.md
+│   └── jogo-da-forca-template.png
+├── README.md
+└── CHANGELOG.md
 ```
 
 #### Etapa 1.2: Lógica de Palavras (Dev A)
