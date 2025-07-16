@@ -91,9 +91,9 @@ npm run start:server   # Só o servidor local
 npm run start:css      # Só o watcher do CSS
 ```
 
-### 5. Inicie o backend
+### 5. Inicie o backend (num terminal diferente)
 ```bash
-cd ../../backend
+cd src/backend
 uvicorn main:app --reload
 ```
 
