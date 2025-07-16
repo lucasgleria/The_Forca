@@ -1,0 +1,30 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Node.js
+node_modules/
+
+# Build frontend
+src/frontend/styles/style.css
+src/frontend/styles/*.css.map
+
+# VSCode
+.vscode/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+debug.log
+npm-debug.log
+
+# Outros
+.env
+*.sqlite3
+*.db
+.idea/ 
