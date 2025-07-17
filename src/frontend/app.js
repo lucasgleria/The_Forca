@@ -11,6 +11,12 @@ const difficulties = [
   { key: 'medium', label: 'Medium', color: 'bg-gradient-to-br from-yellow-400 to-yellow-600', gradient: 'bg-gradient-to-br from-yellow-400 to-yellow-600' },
   { key: 'hard', label: 'Hard', color: 'bg-gradient-to-br from-red-400 to-red-600', gradient: 'bg-gradient-to-br from-red-400 to-red-600' }
 ];
+// Estado das letras clicadas por dificuldade
+const letrasClicadasPorDificuldade = {
+  easy: new Set(),
+  medium: new Set(),
+  hard: new Set()
+};
 
 function hideAllScreens() {
   menuScreen.style.display = 'none';
@@ -94,6 +100,7 @@ function atualizarPainelDificuldade() {
   const currentBtn = document.getElementById('current-difficulty-btn');
   const changeBtn1 = document.getElementById('change-difficulty-1');
   const changeBtn2 = document.getElementById('change-difficulty-2');
+  const wordArea = document.getElementById('word-area');
 
   // Descobrir as duas dificuldades alternativas
   const atual = difficulties.find(d => d.key === currentDifficulty);
@@ -127,6 +134,15 @@ function atualizarPainelDificuldade() {
       gerarTecladoVirtual();
     };
   }
+
+  // Simular troca de palavra no word-area
+  if (wordArea) {
+    let underscores = '';
+    if (currentDifficulty === 'easy') underscores = '_ _ _ _';
+    else if (currentDifficulty === 'medium') underscores = '_ _ _ _ _ _ _';
+    else if (currentDifficulty === 'hard') underscores = '_ _ _ _ _ _ _ _ _ _';
+    wordArea.textContent = underscores;
+  }
 }
 
 // Função para gerar o teclado virtual (A-Z)
@@ -135,14 +151,20 @@ function gerarTecladoVirtual() {
   if (!keyboard) return;
   keyboard.innerHTML = '';
   const alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const letrasClicadas = letrasClicadasPorDificuldade[currentDifficulty];
   for (let letra of alfabeto) {
     const btn = document.createElement('button');
     btn.textContent = letra;
     btn.className = 'py-2 px-2 sm:px-3 bg-gray-600 rounded font-bold text-base sm:text-lg hover:bg-gray-500 transition';
+    if (letrasClicadas.has(letra)) {
+      btn.disabled = true;
+      btn.classList.add('opacity-50', 'cursor-not-allowed');
+    }
     btn.addEventListener('click', function () {
       console.log('Letra clicada:', letra);
       btn.disabled = true;
       btn.classList.add('opacity-50', 'cursor-not-allowed');
+      letrasClicadasPorDificuldade[currentDifficulty].add(letra);
     });
     keyboard.appendChild(btn);
   }
