@@ -21,9 +21,9 @@
     </div>
   </div>
   <div id="game-screen" class="flex flex-col items-center justify-center min-h-screen w-full px-2" style="display: none;">
-    <div class="flex flex-col md:flex-row gap-4 md:gap-8 w-full max-w-4xl mx-auto">
-      <!-- Painel lateral de dificuldade -->
-      <aside class="hidden md:flex flex-col gap-4 w-32 md:w-56 bg-gray-800 bg-opacity-90 rounded-2xl shadow-xl p-4 h-fit self-center">
+    <div class="flex flex-col md:flex-row gap-4 md:gap-8 w-full max-w-4xl mx-auto items-start">
+      <!-- Painel lateral de dificuldade (esquerdo) -->
+      <aside class="hidden md:flex flex-col gap-4 w-32 md:w-56 bg-gray-800 bg-opacity-90 rounded-2xl shadow-xl p-4 h-fit mt-0">
         <div class="text-center text-base font-semibold mb-2">DIFICULDADE DO JOGO</div>
         <button id="current-difficulty-btn" class="w-full py-2 px-4 rounded-full font-bold text-lg bg-gray-600 text-white cursor-default mb-2" disabled>Easy</button>
         <hr class="border-gray-600 my-2">
@@ -39,17 +39,32 @@
         <div id="hangman-drawing" class="w-32 h-32 md:w-40 md:h-40 bg-gray-800 rounded-lg flex items-center justify-center mb-2">FORCA</div>
         <!-- Área da palavra -->
         <div id="word-area" class="flex gap-1 sm:gap-2 text-2xl sm:text-3xl font-mono tracking-widest mb-2">_ _ _ _ _</div>
-        <!-- Painel de letras adivinhadas -->
-        <div id="guessed-panel" class="mb-2 text-sm sm:text-base">Letras já tentadas: <span id="guessed-letters"></span></div>
         <!-- Teclado virtual -->
         <div id="keyboard" class="grid grid-cols-6 sm:grid-cols-9 gap-1 sm:gap-2 w-full max-w-md"></div>
-        <!-- Botões extras -->
-        <div class="flex flex-col sm:flex-row gap-2 mt-4 w-full max-w-md">
-          <input id="new-word-input" type="text" placeholder="Nova palavra" class="flex-1 px-2 py-1 rounded bg-gray-700 text-white focus:outline-none" />
-          <button id="add-word-btn" class="px-4 py-1 bg-blue-600 rounded hover:bg-blue-700 transition">Add a new word</button>
-          <button id="textsep-tand-btn" class="px-4 py-1 bg-purple-600 rounded hover:bg-purple-700 transition">Textsep tand</button>
+        <!-- Botões extras: Nova palavra (placeholder com overlay) -->
+        <div id="add-word-container" class="relative w-full max-w-md mt-4">
+          <!-- Overlay que cobre o input e botões -->
+          <div id="add-word-overlay" class="absolute inset-0 bg-gray-900 bg-opacity-100 flex items-center justify-center cursor-pointer z-10">
+            <span class="text-white font-semibold">Clique aqui. Isso apenas será exibido no final do jogo</span>
+          </div>
+          <div id="add-word-form" class="flex flex-col sm:flex-row gap-2 w-full p-2 justify-center items-center">
+            <input id="new-word-input" type="text" placeholder="Nova palavra" class="h-10 w-full sm:w-48 max-w-xs px-3 py-2 rounded bg-gray-700 text-white focus:outline-none" />
+            <button id="add-word-btn" class="h-10 w-full sm:flex-1 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 transition">Add a new word</button>
+          </div>
         </div>
       </main>
+      <!-- Painel lateral direito: Tentativas -->
+      <aside class="hidden md:flex flex-col gap-4 w-32 md:w-56 bg-gray-800 bg-opacity-90 rounded-2xl shadow-xl p-4 h-fit mt-0">
+        <div class="text-center text-base font-semibold mb-2">TENTATIVAS:</div>
+        <div class="flex flex-wrap gap-2 justify-center">
+          <!-- Placeholder: Letras certas (verde) e erradas (vermelho) -->
+          <span class="py-2 px-2 sm:px-3 rounded font-bold text-base sm:text-lg text-white bg-green-600">A</span>
+          <span class="py-2 px-2 sm:px-3 rounded font-bold text-base sm:text-lg text-white bg-red-600">B</span>
+          <span class="py-2 px-2 sm:px-3 rounded font-bold text-base sm:text-lg text-white bg-green-600">E</span>
+          <span class="py-2 px-2 sm:px-3 rounded font-bold text-base sm:text-lg text-white bg-red-600">Z</span>
+          <span class="py-2 px-2 sm:px-3 rounded font-bold text-base sm:text-lg text-white bg-green-600">O</span>
+        </div>
+      </aside>
     </div>
   </div>
   <div id="ending-screen" class="flex flex-col items-center justify-center min-h-screen w-full px-2" style="display: none;">

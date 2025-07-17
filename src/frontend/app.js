@@ -55,6 +55,19 @@ document.addEventListener('DOMContentLoaded', () => {
       showScreen('menu-screen');
     });
   }
+
+  // Placeholder: lógica para overlay do input de nova palavra
+  const addWordOverlay = document.getElementById('add-word-overlay');
+  const addWordForm = document.getElementById('add-word-form');
+  if (addWordOverlay && addWordForm) {
+    addWordForm.style.opacity = '0.3';
+    addWordForm.style.pointerEvents = 'none';
+    addWordOverlay.addEventListener('click', () => {
+      addWordOverlay.style.display = 'none';
+      addWordForm.style.opacity = '1';
+      addWordForm.style.pointerEvents = 'auto';
+    });
+  }
 });
 
 // Função para atualizar o painel lateral de dificuldade
