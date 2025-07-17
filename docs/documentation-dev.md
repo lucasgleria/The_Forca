@@ -51,24 +51,24 @@
 ```
 
 #### Etapa 1.2: Lógica de Palavras (Dev A)
-- [ ] **Tarefa A1.2.1:** Abrir e trabalhar no arquivo `src/backend/word_manager.py`.
-- [ ] **Tarefa A1.2.2:** Dentro de `word_manager.py`, criar dicionários ou listas de palavras (Python `list` de `str`) para cada nível de dificuldade (Fácil, Médio, Difícil). Incluir pelo menos 10 palavras por nível.  
+- [x] **Tarefa A1.2.1:** Abrir e trabalhar no arquivo `src/backend/word_manager.py`.
+- [x] **Tarefa A1.2.2:** Dentro de `word_manager.py`, criar dicionários ou listas de palavras (Python `list` de `str`) para cada nível de dificuldade (Fácil, Médio, Difícil). Incluir pelo menos 10 palavras por nível.  
   Exemplo:  
   ```python
   {"easy": ["casa", "bola", ...], "medium": ["janela", "computador", ...], ...}
   ```
-- [ ] **Tarefa A1.2.3:** Implementar a função `get_random_word(difficulty: str) -> str` que:
-  - [ ] Recebe uma string `difficulty` ("easy", "medium", "hard").
-  - [ ] Retorna uma palavra aleatória da lista correspondente à dificuldade.
-  - [ ] Adicionar tratamento para `difficulty` inválida (pode retornar uma palavra padrão como "erro" ou levantar uma exceção `ValueError`).
+- [x] **Tarefa A1.2.3:** Implementar a função `get_random_word(difficulty: str) -> str` que:
+  - [x] Recebe uma string `difficulty` ("easy", "medium", "hard").
+  - [x] Retorna uma palavra aleatória da lista correspondente à dificuldade.
+  - [x] Adicionar tratamento para `difficulty` inválida (pode retornar uma palavra padrão como "erro" ou levantar uma exceção `ValueError`).
 
 #### Etapa 1.3: Estrutura Básica do FastAPI (Dev B)
-- [/] **Tarefa B1.3.1:** Abrir e trabalhar no arquivo `src/backend/main.py`.
+- [x] **Tarefa B1.3.1:** Abrir e trabalhar no arquivo `src/backend/main.py`.
 - [x] **Tarefa B1.3.2:** Configurar a aplicação FastAPI inicial e o servidor Uvicorn para rodar em `localhost:8000`.  
   Exemplo de comando para rodar: `uvicorn main:app --reload`
   (no diretório `src/backend`)
-- [ ] **Tarefa B1.3.3:** Criar um endpoint de teste simples: `GET /api/hello` que retorna um JSON `{"message": "Hello from FastAPI!"}`. Testar no navegador (`http://localhost:8000/api/hello`).
-- [ ] **Tarefa B1.3.4:** Configurar CORS (Cross-Origin Resource Sharing) no FastAPI para permitir que o frontend (que rodará em uma porta diferente, ex: `localhost:5500` via Live Server) acesse a API. Isso geralmente envolve adicionar `CORSMiddleware`.
+- [x] **Tarefa B1.3.3:** Criar um endpoint de teste simples: `GET /api/hello` que retorna um JSON `{"message": "Hello from FastAPI!"}`. Testar no navegador (`http://localhost:8000/api/hello`).
+- [x] **Tarefa B1.3.4:** Configurar CORS (Cross-Origin Resource Sharing) no FastAPI para permitir que o frontend (que rodará em uma porta diferente, ex: `localhost:8008` via Live Server) acesse a API. Isso geralmente envolve adicionar `CORSMiddleware`.
 
 
 ### FASE 2: Core Frontend (UI/UX)
