@@ -68,6 +68,25 @@ document.addEventListener('DOMContentLoaded', () => {
       addWordForm.style.pointerEvents = 'auto';
     });
   }
+
+  // Lógica para alternar entre tela de vencedor e perdedor na ending screen (placeholder)
+  const toggleEndingBtn = document.getElementById('toggle-ending-btn');
+  const endingMessageWin = document.getElementById('ending-message');
+  const endingMessageLose = document.getElementById('ending-message-lose');
+  if (toggleEndingBtn && endingMessageWin && endingMessageLose) {
+    toggleEndingBtn.addEventListener('click', () => {
+      const isWin = !endingMessageWin.classList.contains('hidden');
+      if (isWin) {
+        endingMessageWin.classList.add('hidden');
+        endingMessageLose.classList.remove('hidden');
+        toggleEndingBtn.textContent = 'Tela de vencedor';
+      } else {
+        endingMessageWin.classList.remove('hidden');
+        endingMessageLose.classList.add('hidden');
+        toggleEndingBtn.textContent = 'Tela de perdedor';
+      }
+    });
+  }
 });
 
 // Função para atualizar o painel lateral de dificuldade
