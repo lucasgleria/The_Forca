@@ -85,21 +85,21 @@
   <div id="game-screen" style="display: none;"></div>
   <div id="ending-screen" style="display: none;"></div>
   ```
-- [ ] **Tarefa B2.1.5:** Dentro de `#menu-screen`, adicionar a estrutura HTML para o título "JOGO DA FORCA" e os botões de dificuldade ("EASY", "MEDIUM", "HARD").
-- [ ] **Tarefa B2.1.6:** Dentro de `#game-screen`, adicionar a estrutura HTML para:
-    - [ ] Área da palavra (traços).
-    - [ ] Desenho da forca (pode ser um `div` placeholder ou um `svg` simples para começar).
-    - [ ] Painel "GUESSED" (letras adivinhadas).
-    - [ ] Teclado virtual (botões para cada letra do alfabeto).
-    - [ ] Painéis laterais (AESY, CLANES, RANKING - com elementos placeholder).
-    - [ ] Botões "Add a new word" e "Textsep tand" (campo de input).
-- [ ] **Tarefa B2.1.7:** Dentro de `#ending-screen`, adicionar a estrutura HTML para:
-    - [ ] Mensagens de "You won!" ou "You were hanged!".
-    - [ ] A palavra secreta revelada.
-    - [ ] Botão "Jogar Novamente".
+- [x] **Tarefa B2.1.5:** Dentro de `#menu-screen`, adicionar a estrutura HTML para o título "JOGO DA FORCA" e os botões de dificuldade ("EASY", "MEDIUM", "HARD").
+- [x] **Tarefa B2.1.6:** Dentro de `#game-screen`, adicionar a estrutura HTML para:
+    - [x] Área da palavra (traços).
+    - [x] Desenho da forca (pode ser um `div` placeholder ou um `svg` simples para começar).
+    - [x] Painel "GUESSED" (letras adivinhadas).
+    - [x] Teclado virtual (botões para cada letra do alfabeto).
+    - [x] Painéis laterais (AESY, CLANES, RANKING - com elementos placeholder).
+    - [x] Botões "Add a new word" e "Textsep tand" (campo de input).
+- [x] **Tarefa B2.1.7:** Dentro de `#ending-screen`, adicionar a estrutura HTML para:
+    - [x] Mensagens de "You won!" ou "You were hanged!".
+    - [x] A palavra secreta revelada.
+    - [x] Botão "Jogar Novamente".
 
 #### Etapa 2.2: Estilização com CSS (Tailwind/Sass) (Dev B)
-- [/] **Tarefa B2.2.1:** Configurar o ambiente de frontend para usar Tailwind CSS e Sass.
+- [x] **Tarefa B2.2.1:** Configurar o ambiente de frontend para usar Tailwind CSS e Sass.
     - [x] Instalar Node.js e npm/yarn.
     - [x] No diretório `src/frontend`, inicializar npm (`npm init -y`).
     - [x] Instalar Tailwind CSS e PostCSS:  
@@ -111,7 +111,7 @@
       npx tailwindcss init -p
       ```
       Isso criará `tailwind.config.js` e `postcss.config.js`.
-    - [] Configurar `tailwind.config.js` para escanear arquivos HTML e JS por classes Tailwind:  
+    - [x] Configurar `tailwind.config.js` para escanear arquivos HTML e JS por classes Tailwind:  
       ```js
       content: ["./*.html", "./*.js"]
       ```
@@ -127,36 +127,36 @@
       ```
       "build:css": "sass src/frontend/style.scss src/frontend/style.css --watch"
       ```
-- [ ] **Tarefa B2.2.2:** Aplicar estilos globais em `style.scss` (ex: `body { font-family: 'Inter', sans-serif; background-color: #1a202c; color: white; }`). Importar a fonte "Inter" via Google Fonts no `index.html`.
-- [ ] **Tarefa B2.2.3:** Estilizar o layout geral das telas (centralização, tamanhos dos blocos principais) usando classes Tailwind como `container`, `mx-auto`, `flex`, `justify-center`, `items-center`, `min-h-screen`.
-- [ ] **Tarefa B2.2.4:** Estilizar o Menu Screen para se assemelhar ao template:
-    - [ ] Título com fonte e tamanho adequados.
-    - [ ] Botões de dificuldade com gradientes, bordas arredondadas e sombras usando classes Tailwind (ex: `bg-gradient-to-br from-orange-500 to-orange-700`, `rounded-full`, `shadow-lg`).
-- [ ] **Tarefa B2.2.5:** Estilizar o Game Screen:
-    - [ ] Traços da palavra e letras adivinhadas (usar `span` ou `div` com bordas inferiores).
-    - [ ] Teclado virtual: Botões para cada letra com estilos de hover e active. Feedback visual (cores diferentes) para letras usadas, corretas e erradas.
-    - [ ] Área do "enforcado": Estilizar o `div` placeholder com um fundo escuro e bordas.
-    - [ ] Painéis laterais (GUESSES, AESY, RANKING): Aplicar gradientes de fundo, bordas arredondadas, padding e sombras usando classes Tailwind e/ou mixins Sass.
-    - [ ] Botões "Add a new word" e campo de input: Estilizar para combinar com o tema.
-- [ ] **Tarefa B2.2.6:** Estilizar o Ending Screen:
-    - [ ] Mensagens de vitória/derrota com fontes grandes e cores distintas.
-    - [ ] Balões de fala (usar CSS `clip-path` ou SVG para formas customizadas, ou simplesmente `divs` arredondadas com um triângulo para a ponta).
-    - [ ] Botão "Jogar Novamente" com estilo similar aos botões de dificuldade.
-- [ ] **Tarefa B2.2.7:** Implementar a responsividade básica:
-    - [ ] Usar prefixos responsivos do Tailwind (ex: `md:flex-row`, `sm:w-full`) para ajustar o layout dos painéis e do teclado em telas menores.
-    - [ ] Garantir que os elementos se redimensionem proporcionalmente.
+- [x] **Tarefa B2.2.2:** Aplicar estilos globais em `style.scss` (ex: `body { font-family: 'Inter', sans-serif; background-color: #1a202c; color: white; }`). Importar a fonte "Inter" via Google Fonts no `index.html`.
+- [x] **Tarefa B2.2.3:** Estilizar o layout geral das telas (centralização, tamanhos dos blocos principais) usando classes Tailwind como `container`, `mx-auto`, `flex`, `justify-center`, `items-center`, `min-h-screen`.
+- [x] **Tarefa B2.2.4:** Estilizar o Menu Screen para se assemelhar ao template:
+    - [x] Título com fonte e tamanho adequados.
+    - [x] Botões de dificuldade com gradientes, bordas arredondadas e sombras usando classes Tailwind (ex: `bg-gradient-to-br from-orange-500 to-orange-700`, `rounded-full`, `shadow-lg`).
+- [x] **Tarefa B2.2.5:** Estilizar o Game Screen:
+    - [x] Traços da palavra e letras adivinhadas (usar `span` ou `div` com bordas inferiores).
+    - [x] Teclado virtual: Botões para cada letra com estilos de hover e active. Feedback visual (cores diferentes) para letras usadas, corretas e erradas.
+    - [x] Área do "enforcado": Estilizar o `div` placeholder com um fundo escuro e bordas.
+    - [x] Painéis laterais (GUESSES, AESY, RANKING): Aplicar gradientes de fundo, bordas arredondadas, padding e sombras usando classes Tailwind e/ou mixins Sass.
+    - [x] Botões "Add a new word" e campo de input: Estilizar para combinar com o tema.
+- [x] **Tarefa B2.2.6:** Estilizar o Ending Screen:
+    - [x] Mensagens de vitória/derrota com fontes grandes e cores distintas.
+    - [x] Balões de fala (usar CSS `clip-path` ou SVG para formas customizadas, ou simplesmente `divs` arredondadas com um triângulo para a ponta).
+    - [x] Botão "Jogar Novamente" com estilo similar aos botões de dificuldade.
+- [x] **Tarefa B2.2.7:** Implementar a responsividade básica:
+    - [x] Usar prefixos responsivos do Tailwind (ex: `md:flex-row`, `sm:w-full`) para ajustar o layout dos painéis e do teclado em telas menores.
+    - [x] Garantir que os elementos se redimensionem proporcionalmente.
 
 #### Etapa 2.3: Lógica Básica de UI com JavaScript (Dev B)
 - [x] **Tarefa B2.3.1:** Criar o arquivo `src/frontend/app.js`.
-- [ ] **Tarefa B2.3.2:** Obter referências aos elementos HTML das telas (`menuScreen`, `gameScreen`, `endingScreen`).
-- [ ] **Tarefa B2.3.3:** Implementar funções `showScreen(screenId)` e `hideAllScreens()` para controlar a visibilidade das telas.
-- [ ] **Tarefa B2.3.4:** No carregamento da página (`DOMContentLoaded`), chamar `showScreen('menu-screen')`.
-- [ ] **Tarefa B2.3.5:** Adicionar event listeners aos botões de dificuldade no Menu:
-    - [ ] Ao clicar, registrar a dificuldade no console.
-    - [ ] Chamar `showScreen('game-screen')` e `hideAllScreens()` para transicionar para a tela de jogo.
-- [ ] **Tarefa B2.3.6:** Adicionar event listeners para os botões de letras no teclado virtual do Game Screen:
-    - [ ] Ao clicar, registrar a letra clicada no console.
-    - [ ] Adicionar uma classe CSS para desabilitar visualmente o botão (ex: `opacity-50 cursor-not-allowed`).
+- [x] **Tarefa B2.3.2:** Obter referências aos elementos HTML das telas (`menuScreen`, `gameScreen`, `endingScreen`).
+- [x] **Tarefa B2.3.3:** Implementar funções `showScreen(screenId)` e `hideAllScreens()` para controlar a visibilidade das telas.
+- [x] **Tarefa B2.3.4:** No carregamento da página (`DOMContentLoaded`), chamar `showScreen('menu-screen')`.
+- [x] **Tarefa B2.3.5:** Adicionar event listeners aos botões de dificuldade no Menu:
+    - [x] Ao clicar, registrar a dificuldade no console.
+    - [x] Chamar `showScreen('game-screen')` e `hideAllScreens()` para transicionar para a tela de jogo.
+- [x] **Tarefa B2.3.6:** Adicionar event listeners para os botões de letras no teclado virtual do Game Screen:
+    - [x] Ao clicar, registrar a letra clicada no console.
+    - [x] Adicionar uma classe CSS para desabilitar visualmente o botão (ex: `opacity-50 cursor-not-allowed`).
 
 
 ### FASE 3: Integração Frontend-Backend

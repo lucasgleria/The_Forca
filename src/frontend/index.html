@@ -22,11 +22,16 @@
   </div>
   <div id="game-screen" class="flex flex-col items-center justify-center min-h-screen w-full px-2" style="display: none;">
     <div class="flex flex-col md:flex-row gap-4 md:gap-8 w-full max-w-4xl mx-auto">
-      <!-- Painel lateral esquerdo (AESY, CLANES, RANKING) -->
-      <aside class="hidden md:flex flex-col gap-4 w-32 md:w-40">
-        <div class="bg-gray-700 rounded-lg p-2 md:p-4 text-center">AESY</div>
-        <div class="bg-gray-700 rounded-lg p-2 md:p-4 text-center">CLANES</div>
-        <div class="bg-gray-700 rounded-lg p-2 md:p-4 text-center">RANKING</div>
+      <!-- Painel lateral de dificuldade -->
+      <aside class="hidden md:flex flex-col gap-4 w-32 md:w-56 bg-gray-800 bg-opacity-90 rounded-2xl shadow-xl p-4 h-fit self-center">
+        <div class="text-center text-base font-semibold mb-2">DIFICULDADE DO JOGO</div>
+        <button id="current-difficulty-btn" class="w-full py-2 px-4 rounded-full font-bold text-lg bg-gray-600 text-white cursor-default mb-2" disabled>Easy</button>
+        <hr class="border-gray-600 my-2">
+        <div class="text-center text-sm font-medium mb-2">TROCAR A DIFICULDADE</div>
+        <div class="flex flex-col gap-2">
+          <button id="change-difficulty-1" class="w-full py-2 px-4 rounded-full font-bold text-base bg-gradient-to-br from-yellow-400 to-yellow-600 text-white hover:scale-105 transition">Medium</button>
+          <button id="change-difficulty-2" class="w-full py-2 px-4 rounded-full font-bold text-base bg-gradient-to-br from-red-400 to-red-600 text-white hover:scale-105 transition">Hard</button>
+        </div>
       </aside>
       <!-- Área principal do jogo -->
       <main class="flex-1 flex flex-col items-center gap-4 md:gap-6 w-full">
