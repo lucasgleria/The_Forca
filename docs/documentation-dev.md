@@ -164,27 +164,27 @@
 **Objetivo:** Conectar a interface do usuário com a lógica do jogo no servidor.
 
 #### Etapa 3.1: Lógica do Jogo no Backend (Dev A)
-- [ ] **Tarefa A3.1.1:** Abrir e trabalhar no arquivo `src/backend/game_logic.py`.
-- [ ] **Tarefa A3.1.2:** Implementar a classe `GameSession`:
-    - [ ] **Atributos:**
-        - [ ] `word: str`: A palavra secreta do jogo.
-        - [ ] `guessed_letters: set[str]`: Conjunto de letras já tentadas (corretas ou erradas).
-        - [ ] `errors: int`: Contador de erros.
-        - [ ] `max_errors: int`: Limite de erros (ex: 6 ou 7, dependendo do desenho da forca).
-        - [ ] `status: str`: Status atual do jogo ("playing", "won", "lost").
-    - [ ] **Métodos:**
-        - [ ] `__init__(self, word: str, max_errors: int = 6)`: Inicializa a sessão com a palavra e o limite de erros.
-        - [ ] `make_guess(self, letter: str) -> bool`:
-            - [ ] Recebe uma `letter` (string, garantir que seja minúscula e única).
-            - [ ] Adiciona a letra a `guessed_letters`.
-            - [ ] Se a letra **NÃO** estiver na `word`, incrementa `errors`.
-            - [ ] Atualiza o status para "won" se todas as letras da palavra estiverem em `guessed_letters`.
-            - [ ] Atualiza o status para "lost" se `errors` atingir `max_errors`.
-            - [ ] Retorna `True` se a letra estava na palavra, `False` caso contrário.
-        - [ ] `get_word_display(self) -> str`:
-            - [ ] Retorna a palavra com letras adivinhadas reveladas e traços para as não adivinhadas (ex: se `word="python"` e `guessed_letters={"p", "o"}`, retorna `p_ _ _ o _`).
-        - [ ] `get_game_state(self) -> dict`:
-            - [ ] Retorna um dicionário com todos os dados relevantes para o frontend:
+- [x] **Tarefa A3.1.1:** Abrir e trabalhar no arquivo `src/backend/game_logic.py`.
+- [x] **Tarefa A3.1.2:** Implementar a classe `GameSession`:
+    - [x] **Atributos:**
+        - [x] `word: str`: A palavra secreta do jogo.
+        - [x] `guessed_letters: set[str]`: Conjunto de letras já tentadas (corretas ou erradas).
+        - [x] `errors: int`: Contador de erros.
+        - [x] `max_errors: int`: Limite de erros (ex: 6 ou 7, dependendo do desenho da forca).
+        - [x] `status: str`: Status atual do jogo ("playing", "won", "lost").
+    - [x] **Métodos:**
+        - [x] `__init__(self, word: str, max_errors: int = 6)`: Inicializa a sessão com a palavra e o limite de erros.
+        - [x] `make_guess(self, letter: str) -> bool`:
+            - [x] Recebe uma `letter` (string, garantir que seja minúscula e única).
+            - [x] Adiciona a letra a `guessed_letters`.
+            - [x] Se a letra **NÃO** estiver na `word`, incrementa `errors`.
+            - [x] Atualiza o status para "won" se todas as letras da palavra estiverem em `guessed_letters`.
+            - [x] Atualiza o status para "lost" se `errors` atingir `max_errors`.
+            - [x] Retorna `True` se a letra estava na palavra, `False` caso contrário.
+        - [x] `get_word_display(self) -> str`:
+            - [x] Retorna a palavra com letras adivinhadas reveladas e traços para as não adivinhadas (ex: se `word="python"` e `guessed_letters={"p", "o"}`, retorna `p_ _ _ o _`).
+        - [x] `get_game_state(self) -> dict`:
+            - [x] Retorna um dicionário com todos os dados relevantes para o frontend:
                 ```python
                 {
                     "word_display": self.get_word_display(),
