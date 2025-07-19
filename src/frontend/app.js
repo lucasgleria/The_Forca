@@ -18,6 +18,9 @@ const letrasClicadasPorDificuldade = {
   hard: new Set()
 };
 
+// Variável global para session_id
+let sessionId = null;
+
 function hideAllScreens() {
   menuScreen.style.display = 'none';
   gameScreen.style.display = 'none';
@@ -33,67 +36,127 @@ function showScreen(screenId) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Exibe o menu ao carregar
-  showScreen('menu-screen');
-
-  // Event listeners dos botões de dificuldade
-  document.getElementById('easy-btn').addEventListener('click', () => {
-    currentDifficulty = 'easy';
-    console.log('Dificuldade selecionada: easy');
-    showScreen('game-screen');
-  });
-  document.getElementById('medium-btn').addEventListener('click', () => {
-    currentDifficulty = 'medium';
-    console.log('Dificuldade selecionada: medium');
-    showScreen('game-screen');
-  });
-  document.getElementById('hard-btn').addEventListener('click', () => {
-    currentDifficulty = 'hard';
-    console.log('Dificuldade selecionada: hard');
-    showScreen('game-screen');
-  });
-
-  // Event listener do botão Jogar Novamente
-  const playAgainBtn = document.getElementById('play-again-btn');
-  if (playAgainBtn) {
-    playAgainBtn.addEventListener('click', () => {
-      showScreen('menu-screen');
-    });
+// Função para atualizar a área da palavra
+function atualizarWordArea(wordDisplay) {
+  const wordArea = document.getElementById('word-area');
+  if (wordArea) {
+    wordArea.textContent = wordDisplay;
   }
+}
 
-  // Placeholder: lógica para overlay do input de nova palavra
-  const addWordOverlay = document.getElementById('add-word-overlay');
-  const addWordForm = document.getElementById('add-word-form');
-  if (addWordOverlay && addWordForm) {
-    addWordForm.style.opacity = '0.3';
-    addWordForm.style.pointerEvents = 'none';
-    addWordOverlay.addEventListener('click', () => {
-      addWordOverlay.style.display = 'none';
-      addWordForm.style.opacity = '1';
-      addWordForm.style.pointerEvents = 'auto';
-    });
+// Função para atualizar o desenho da forca (placeholder: mostra número de erros)
+function atualizarHangmanDrawing(errors, maxErrors) {
+  const hangman = document.getElementById('hangman-drawing');
+  if (hangman) {
+    hangman.textContent = `Erros: ${errors} / ${maxErrors}`;
   }
+}
 
-  // Lógica para alternar entre tela de vencedor e perdedor na ending screen (placeholder)
-  const toggleEndingBtn = document.getElementById('toggle-ending-btn');
-  const endingMessageWin = document.getElementById('ending-message');
-  const endingMessageLose = document.getElementById('ending-message-lose');
-  if (toggleEndingBtn && endingMessageWin && endingMessageLose) {
-    toggleEndingBtn.addEventListener('click', () => {
-      const isWin = !endingMessageWin.classList.contains('hidden');
-      if (isWin) {
-        endingMessageWin.classList.add('hidden');
-        endingMessageLose.classList.remove('hidden');
-        toggleEndingBtn.textContent = 'Tela de vencedor';
-      } else {
-        endingMessageWin.classList.remove('hidden');
-        endingMessageLose.classList.add('hidden');
-        toggleEndingBtn.textContent = 'Tela de perdedor';
-      }
-    });
+// Função para atualizar painel de tentativas
+function atualizarGuessesArea(guessedLetters, word) {
+  const guessesArea = document.getElementById('guesses-area');
+  if (!guessesArea) return;
+  guessesArea.innerHTML = '';
+  guessedLetters.forEach(letra => {
+    const span = document.createElement('span');
+    span.textContent = letra.toUpperCase();
+    if (word.toLowerCase().includes(letra.toLowerCase())) {
+      span.className = 'py-2 px-2 sm:px-3 rounded font-bold text-base sm:text-lg text-white bg-green-600';
+    } else {
+      span.className = 'py-2 px-2 sm:px-3 rounded font-bold text-base sm:text-lg text-white bg-red-600';
+    }
+    guessesArea.appendChild(span);
+  });
+}
+
+// Função para atualizar tela de fim de jogo
+function atualizarEndingScreen(status, word) {
+  const winMsg = document.getElementById('ending-message');
+  const loseMsg = document.getElementById('ending-message-lose');
+  const revealedWord = document.getElementById('revealed-word');
+  if (winMsg && loseMsg && revealedWord) {
+    if (status === 'won') {
+      winMsg.classList.remove('hidden');
+      loseMsg.classList.add('hidden');
+      winMsg.textContent = 'You won!';
+    } else {
+      winMsg.classList.add('hidden');
+      loseMsg.classList.remove('hidden');
+      loseMsg.textContent = 'You were hanged!';
+    }
+    revealedWord.textContent = word.toUpperCase();
   }
-});
+}
+
+// Refatorar botões de dificuldade para iniciar o jogo via backend
+function iniciarJogo(dificuldade) {
+  fetch('http://localhost:8000/api/game/start', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ difficulty: dificuldade })
+  })
+    .then(res => res.json())
+    .then(data => {
+      sessionId = data.session_id;
+      const gameState = data.game_state;
+      atualizarWordArea(gameState.word_display);
+      atualizarHangmanDrawing(gameState.errors, gameState.max_errors);
+      atualizarGuessesArea(gameState.guessed_letters, gameState.word_display.replace(/ /g, ''));
+      showScreen('game-screen');
+      gerarTecladoVirtual(gameState);
+    })
+    .catch(err => {
+      alert('Erro ao iniciar o jogo: ' + err);
+    });
+}
+
+// Refatorar teclado virtual para integração com backend
+function gerarTecladoVirtual(gameState) {
+  const keyboard = document.getElementById('keyboard');
+  if (!keyboard) return;
+  keyboard.innerHTML = '';
+  const alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const letrasClicadas = new Set(gameState ? gameState.guessed_letters.map(l => l.toUpperCase()) : []);
+  for (let letra of alfabeto) {
+    const btn = document.createElement('button');
+    btn.textContent = letra;
+    btn.className = 'py-2 px-2 sm:px-3 bg-gray-600 rounded font-bold text-base sm:text-lg hover:bg-gray-500 transition';
+    if (letrasClicadas.has(letra)) {
+      btn.disabled = true;
+      btn.classList.add('opacity-50', 'cursor-not-allowed');
+    }
+    btn.addEventListener('click', function () {
+      btn.disabled = true;
+      btn.classList.add('opacity-50', 'cursor-not-allowed');
+      if (!sessionId) return;
+      fetch('http://localhost:8000/api/game/guess', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session_id: sessionId, letter: letra })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.error) {
+            alert(data.error);
+            return;
+          }
+          const gameState = data.game_state;
+          atualizarWordArea(gameState.word_display);
+          atualizarHangmanDrawing(gameState.errors, gameState.max_errors);
+          atualizarGuessesArea(gameState.guessed_letters, gameState.word_display.replace(/ /g, ''));
+          gerarTecladoVirtual(gameState);
+          if (gameState.status === 'won' || gameState.status === 'lost') {
+            atualizarEndingScreen(gameState.status, gameState.word_display.replace(/ /g, ''));
+            showScreen('ending-screen');
+          }
+        })
+        .catch(err => {
+          alert('Erro ao enviar palpite: ' + err);
+        });
+    });
+    keyboard.appendChild(btn);
+  }
+}
 
 // Função para atualizar o painel lateral de dificuldade
 function atualizarPainelDificuldade() {
@@ -145,33 +208,67 @@ function atualizarPainelDificuldade() {
   }
 }
 
-// Função para gerar o teclado virtual (A-Z)
-function gerarTecladoVirtual() {
-  const keyboard = document.getElementById('keyboard');
-  if (!keyboard) return;
-  keyboard.innerHTML = '';
-  const alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  const letrasClicadas = letrasClicadasPorDificuldade[currentDifficulty];
-  for (let letra of alfabeto) {
-    const btn = document.createElement('button');
-    btn.textContent = letra;
-    btn.className = 'py-2 px-2 sm:px-3 bg-gray-600 rounded font-bold text-base sm:text-lg hover:bg-gray-500 transition';
-    if (letrasClicadas.has(letra)) {
-      btn.disabled = true;
-      btn.classList.add('opacity-50', 'cursor-not-allowed');
-    }
-    btn.addEventListener('click', function () {
-      console.log('Letra clicada:', letra);
-      btn.disabled = true;
-      btn.classList.add('opacity-50', 'cursor-not-allowed');
-      letrasClicadasPorDificuldade[currentDifficulty].add(letra);
-    });
-    keyboard.appendChild(btn);
-  }
-}
-
 // Expor funções no escopo global para facilitar testes e integração
 window.showScreen = showScreen;
 window.hideAllScreens = hideAllScreens;
 window.gerarTecladoVirtual = gerarTecladoVirtual;
 window.atualizarPainelDificuldade = atualizarPainelDificuldade;
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Exibe o menu ao carregar
+  showScreen('menu-screen');
+
+  // Event listeners dos botões de dificuldade
+  document.getElementById('easy-btn').addEventListener('click', () => {
+    currentDifficulty = 'easy';
+    iniciarJogo('easy');
+  });
+  document.getElementById('medium-btn').addEventListener('click', () => {
+    currentDifficulty = 'medium';
+    iniciarJogo('medium');
+  });
+  document.getElementById('hard-btn').addEventListener('click', () => {
+    currentDifficulty = 'hard';
+    iniciarJogo('hard');
+  });
+
+  // Event listener do botão Jogar Novamente
+  const playAgainBtn = document.getElementById('play-again-btn');
+  if (playAgainBtn) {
+    playAgainBtn.addEventListener('click', () => {
+      showScreen('menu-screen');
+    });
+  }
+
+  // Placeholder: lógica para overlay do input de nova palavra
+  const addWordOverlay = document.getElementById('add-word-overlay');
+  const addWordForm = document.getElementById('add-word-form');
+  if (addWordOverlay && addWordForm) {
+    addWordForm.style.opacity = '0.3';
+    addWordForm.style.pointerEvents = 'none';
+    addWordOverlay.addEventListener('click', () => {
+      addWordOverlay.style.display = 'none';
+      addWordForm.style.opacity = '1';
+      addWordForm.style.pointerEvents = 'auto';
+    });
+  }
+
+  // Lógica para alternar entre tela de vencedor e perdedor na ending screen (placeholder)
+  const toggleEndingBtn = document.getElementById('toggle-ending-btn');
+  const endingMessageWin = document.getElementById('ending-message');
+  const endingMessageLose = document.getElementById('ending-message-lose');
+  if (toggleEndingBtn && endingMessageWin && endingMessageLose) {
+    toggleEndingBtn.addEventListener('click', () => {
+      const isWin = !endingMessageWin.classList.contains('hidden');
+      if (isWin) {
+        endingMessageWin.classList.add('hidden');
+        endingMessageLose.classList.remove('hidden');
+        toggleEndingBtn.textContent = 'Tela de vencedor';
+      } else {
+        endingMessageWin.classList.remove('hidden');
+        endingMessageLose.classList.add('hidden');
+        toggleEndingBtn.textContent = 'Tela de perdedor';
+      }
+    });
+  }
+});

@@ -212,39 +212,26 @@
 - [x] **Tarefa B3.2.4:** (Opcional, para debug) Implementar um endpoint `GET /api/game/status/{session_id}` para obter o estado atual de uma sessão de jogo específica.
 
 #### Etapa 3.3: Conexão Frontend-Backend (Dev B)
-- [ ] **Tarefa B3.3.1:** Em `src/frontend/app.js`, refatorar a função de "Iniciar Jogo" para fazer uma requisição `POST` para `/api/game/start` (com a dificuldade).
-    - [ ] Usar `fetch()` para a requisição.
-    - [ ] No `then()` da fetch, receber a resposta JSON (que contém o estado inicial do jogo e o `session_id`).
-    - [ ] Armazenar o `session_id` em uma variável global no JavaScript.
-    - [ ] Chamar `showScreen('game-screen')` e atualizar a UI com `word_display` e `errors` iniciais.
-- [ ] **Tarefa B3.3.2:** Refatorar o event listener das letras do teclado virtual:
-    - [ ] Ao clicar, obter a letra e o `session_id` armazenado.
-    - [ ] Fazer uma requisição `POST` para `/api/game/guess` com a letra e o `session_id`.
-    - [ ] No `then()` da fetch, receber o estado atualizado do jogo:
-        - [ ] Atualizar o `word_display` na tela.
-        - [ ] Atualizar o desenho da forca (ainda pode ser um placeholder que muda com `errors`).
-        - [ ] Atualizar o painel de letras "GUESSES" (marcar letras corretas/erradas visualmente).
-        - [ ] Verificar o status do jogo (`won` ou `lost`). Se o jogo terminou, chamar `showScreen('ending-screen')` e passar os dados finais para renderização.
+- [x] **Tarefa B3.3.1:** Em `src/frontend/app.js`, refatorar a função de "Iniciar Jogo" para fazer uma requisição `POST` para `/api/game/start` (com a dificuldade).
+    - [x] Usar `fetch()` para a requisição.
+    - [x] No `then()` da fetch, receber a resposta JSON (que contém o estado inicial do jogo e o `session_id`).
+    - [x] Armazenar o `session_id` em uma variável global no JavaScript.
+    - [x] Chamar `showScreen('game-screen')` e atualizar a UI com `word_display` e `errors` iniciais.
+- [x] **Tarefa B3.3.2:** Refatorar o event listener das letras do teclado virtual:
+    - [x] Ao clicar, obter a letra e o `session_id` armazenado.
+    - [x] Fazer uma requisição `POST` para `/api/game/guess` com a letra e o `session_id`.
+    - [x] No `then()` da fetch, receber o estado atualizado do jogo:
+        - [x] Atualizar o `word_display` na tela.
+        - [x] Atualizar o desenho da forca (ainda pode ser um placeholder que muda com `errors`).
+        - [x] Atualizar o painel de letras "GUESSES" (marcar letras corretas/erradas visualmente).
+        - [x] Verificar o status do jogo (`won` ou `lost`). Se o jogo terminou, chamar `showScreen('ending-screen')` e passar os dados finais para renderização.
 
 
 ### FASE 4: Funcionalidades Adicionais e Polimento
 
-**Objetivo:** Adicionar funcionalidades secundárias, ranking e refinar a experiência do usuário.
+**Objetivo:** Adicionar funcionalidades secundárias e refinar a experiência do usuário.
 
-#### Etapa 4.1: Ranking (Dev B)
-- [ ] **Tarefa B4.1.1:** Decidir e configurar a persistência para o ranking. Para começar, usar um arquivo JSON simples (`rankings.json`) no backend.
-- [x] **Tarefa B4.1.2:** Criar o módulo `src/backend/ranking_manager.py` com as seguintes funções:
-    - [ ] `load_rankings() -> list`: Carrega os rankings de `rankings.json`.
-    - [ ] `save_ranking(name: str, score: int)`: Adiciona um novo ranking e salva em `rankings.json` (manter ordenado por score, limitar número de entradas).
-    - [ ] `get_top_rankings(limit: int = 5) -> list`: Retorna os N melhores rankings.
-- [ ] **Tarefa B4.1.3:** Em `src/backend/main.py`, implementar o endpoint `GET /api/ranking` que chama `get_top_rankings()` e retorna a lista.
-- [ ] **Tarefa B4.1.4:** Em `src/backend/main.py`, implementar o endpoint `POST /api/ranking/save` que recebe `name` e `score` e chama `save_ranking()`.
-- [ ] **Tarefa B4.1.5:** No Frontend (`app.js`):
-    - [ ] Ao carregar o Menu Screen, fazer uma requisição `GET /api/ranking` e popular o painel de Ranking na UI.
-    - [ ] Na Ending Screen (após uma vitória), exibir um campo de texto para o nome do jogador e um botão "Salvar Pontuação".
-    - [ ] Ao clicar em "Salvar Pontuação", fazer uma requisição `POST /api/ranking/save` com o nome e a pontuação final do jogo.
-
-#### Etapa 4.2: Melhorias de UI/UX (Dev B)
+#### Etapa 4.1: Melhorias de UI/UX (Dev B)
 - [ ] **Tarefa B4.2.1:** Implementar o desenho progressivo do boneco da forca.
     - [ ] Opção 1: Usar um único SVG e manipular suas partes com JavaScript (adicionar classes CSS ou mudar display de partes do SVG).
     - [ ] Opção 2: Ter várias imagens PNG/JPG do boneco em diferentes estágios de erro e trocar a `src` de uma `img` com base no `errors` do estado do jogo.
