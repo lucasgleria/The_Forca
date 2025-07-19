@@ -196,20 +196,20 @@
                 ```
 
 #### Etapa 3.2: Endpoints da API para o Jogo (Dev B)
-- [ ] **Tarefa B3.2.1:** Em `src/backend/main.py`, importar `GameSession` de `game_logic` e `get_random_word` de `word_manager`.
-- [ ] **Tarefa B3.2.2:** Implementar o endpoint `POST /api/game/start`:
-    - [ ] Receber a `difficulty` (string) do frontend no corpo da requisição.
-    - [ ] Usar `get_random_word(difficulty)` para obter a palavra secreta.
-    - [ ] Criar uma nova instância de `GameSession`.
-    - [ ] Gerenciar sessões: Para um jogo simples de um jogador, pode-se usar um dicionário global no `main.py` para mapear um `session_id` (UUID gerado no backend) para a instância `GameSession`. O `session_id` deve ser retornado ao frontend.
-    - [ ] Retornar o `game_session.get_game_state()` inicial junto com o `session_id` para o frontend.
-- [ ] **Tarefa B3.2.3:** Implementar o endpoint `POST /api/game/guess`:
-    - [ ] Receber a `letter` (string) e o `session_id` do frontend no corpo da requisição.
-    - [ ] Recuperar a instância `GameSession` usando o `session_id`.
-    - [ ] Chamar `game_session.make_guess(letter)`.
-    - [ ] Retornar o `game_session.get_game_state()` atualizado para o frontend.
-    - [ ] Adicionar tratamento de erro se o `session_id` for inválido ou a letra já tiver sido tentada.
-- [ ] **Tarefa B3.2.4:** (Opcional, para debug) Implementar um endpoint `GET /api/game/status/{session_id}` para obter o estado atual de uma sessão de jogo específica.
+- [x] **Tarefa B3.2.1:** Em `src/backend/main.py`, importar `GameSession` de `game_logic` e `get_random_word` de `word_manager`.
+- [x] **Tarefa B3.2.2:** Implementar o endpoint `POST /api/game/start`:
+    - [x] Receber a `difficulty` (string) do frontend no corpo da requisição.
+    - [x] Usar `get_random_word(difficulty)` para obter a palavra secreta.
+    - [x] Criar uma nova instância de `GameSession`.
+    - [x] Gerenciar sessões: Para um jogo simples de um jogador, pode-se usar um dicionário global no `main.py` para mapear um `session_id` (UUID gerado no backend) para a instância `GameSession`. O `session_id` deve ser retornado ao frontend.
+    - [x] Retornar o `game_session.get_game_state()` inicial junto com o `session_id` para o frontend.
+- [x] **Tarefa B3.2.3:** Implementar o endpoint `POST /api/game/guess`:
+    - [x] Receber a `letter` (string) e o `session_id` do frontend no corpo da requisição.
+    - [x] Recuperar a instância `GameSession` usando o `session_id`.
+    - [x] Chamar `game_session.make_guess(letter)`.
+    - [x] Retornar o `game_session.get_game_state()` atualizado para o frontend.
+    - [x] Adicionar tratamento de erro se o `session_id` for inválido ou a letra já tiver sido tentada.
+- [x] **Tarefa B3.2.4:** (Opcional, para debug) Implementar um endpoint `GET /api/game/status/{session_id}` para obter o estado atual de uma sessão de jogo específica.
 
 #### Etapa 3.3: Conexão Frontend-Backend (Dev B)
 - [ ] **Tarefa B3.3.1:** Em `src/frontend/app.js`, refatorar a função de "Iniciar Jogo" para fazer uma requisição `POST` para `/api/game/start` (com a dificuldade).
