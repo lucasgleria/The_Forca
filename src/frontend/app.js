@@ -27,12 +27,16 @@ function hideAllScreens() {
   endingScreen.style.display = 'none';
 }
 
-function showScreen(screenId) {
+function showScreen(screenId, gameState) {
   hideAllScreens();
   document.getElementById(screenId).style.display = 'block';
   if (screenId === 'game-screen') {
     atualizarPainelDificuldade();
-    gerarTecladoVirtual();
+    if (gameState) {
+      gerarTecladoVirtual(gameState);
+    } else if (window.currentGameState) {
+      gerarTecladoVirtual(window.currentGameState);
+    }
   }
 }
 
@@ -112,7 +116,7 @@ function iniciarJogo(dificuldade) {
       atualizarWordArea(gameState.word_display);
       atualizarBonecoSVG(gameState.errors);
       atualizarGuessesArea(gameState.guessed_letters, gameState.word_display.replace(/ /g, ''));
-      showScreen('game-screen');
+      showScreen('game-screen', gameState);
       gerarTecladoVirtual(gameState);
     })
     .catch(err => {
@@ -127,14 +131,16 @@ function gerarTecladoVirtual(gameState) {
   keyboard.innerHTML = '';
   const alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const letrasClicadas = new Set(gameState ? gameState.guessed_letters.map(l => l.toUpperCase()) : []);
+  let jogoFinalizado = gameState && (gameState.status === 'won' || gameState.status === 'lost');
   for (let letra of alfabeto) {
     const btn = document.createElement('button');
     btn.textContent = letra;
     btn.className = 'py-2 px-2 sm:px-3 bg-gray-600 rounded font-bold text-base sm:text-lg hover:bg-gray-500 transition';
-    if (letrasClicadas.has(letra)) {
+    if (letrasClicadas.has(letra) || jogoFinalizado) {
       btn.disabled = true;
       btn.classList.add('opacity-50', 'cursor-not-allowed');
     }
+    if (!jogoFinalizado) {
     btn.addEventListener('click', function () {
       btn.disabled = true;
       btn.classList.add('opacity-50', 'cursor-not-allowed');
@@ -156,16 +162,46 @@ function gerarTecladoVirtual(gameState) {
           atualizarGuessesArea(gameState.guessed_letters, gameState.word_display.replace(/ /g, ''));
           gerarTecladoVirtual(gameState);
           if (gameState.status === 'won' || gameState.status === 'lost') {
-            atualizarEndingScreen(gameState.status, gameState.word_display.replace(/ /g, ''));
-            showScreen('ending-screen');
+              if (gameState) {
+                window.currentGameState = gameState; // Salva o estado final do jogo
+              }
+              exibirFormNovaPalavra();
           }
         })
         .catch(err => {
           alert('Erro ao enviar palpite: ' + err);
         });
     });
+    }
     keyboard.appendChild(btn);
   }
+}
+
+function exibirFormNovaPalavra() {
+  const addWordOverlay = document.getElementById('add-word-overlay');
+  const addWordForm = document.getElementById('add-word-form');
+  const addWordInput = document.getElementById('new-word-input');
+  if (addWordOverlay && addWordForm) {
+    addWordOverlay.style.display = 'none';
+    addWordForm.style.opacity = '1';
+    addWordForm.style.pointerEvents = 'auto';
+    if (addWordInput) {
+      addWordInput.disabled = false;
+      addWordInput.focus();
+    }
+  }
+}
+
+function showNotification(message, type = 'success') {
+  const notification = document.getElementById('notification');
+  if (!notification) return;
+  notification.textContent = message;
+  notification.classList.remove('hidden');
+  notification.classList.remove('bg-green-600', 'bg-red-600');
+  notification.classList.add(type === 'success' ? 'bg-green-600' : 'bg-red-600');
+  setTimeout(() => {
+    notification.classList.add('hidden');
+  }, 3000);
 }
 
 // Função para atualizar o painel lateral de dificuldade
@@ -256,28 +292,57 @@ document.addEventListener('DOMContentLoaded', () => {
   if (addWordOverlay && addWordForm) {
     addWordForm.style.opacity = '0.3';
     addWordForm.style.pointerEvents = 'none';
-    addWordOverlay.addEventListener('click', () => {
-      addWordOverlay.style.display = 'none';
-      addWordForm.style.opacity = '1';
-      addWordForm.style.pointerEvents = 'auto';
-    });
+    // Removido o event listener de clique no overlay
   }
 
-  // Lógica para alternar entre tela de vencedor e perdedor na ending screen (placeholder)
-  const toggleEndingBtn = document.getElementById('toggle-ending-btn');
-  const endingMessageWin = document.getElementById('ending-message');
-  const endingMessageLose = document.getElementById('ending-message-lose');
-  if (toggleEndingBtn && endingMessageWin && endingMessageLose) {
-    toggleEndingBtn.addEventListener('click', () => {
-      const isWin = !endingMessageWin.classList.contains('hidden');
-      if (isWin) {
-        endingMessageWin.classList.add('hidden');
-        endingMessageLose.classList.remove('hidden');
-        toggleEndingBtn.textContent = 'Tela de vencedor';
-      } else {
-        endingMessageWin.classList.remove('hidden');
-        endingMessageLose.classList.add('hidden');
-        toggleEndingBtn.textContent = 'Tela de perdedor';
+  // Event listener do botão de adicionar nova palavra
+  const addWordBtn = document.getElementById('add-word-btn');
+  if (addWordBtn) {
+    addWordBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const input = document.getElementById('new-word-input');
+      const word = input.value.trim();
+      if (!word) {
+        alert('Digite uma palavra válida!');
+        return;
+      }
+      // Envia para o backend
+      try {
+        const res = await fetch('http://localhost:8000/api/words/add', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ word })
+        });
+        const data = await res.json();
+        if (data.error) {
+          showNotification(data.error, 'error');
+          return;
+        }
+        showNotification(data.message, 'success');
+      } catch (err) {
+        showNotification('Erro ao adicionar palavra: ' + err, 'error');
+      }
+      // LOGS DE DEPURAÇÃO
+      console.log('DEBUG: window.currentGameState no momento do envio:', window.currentGameState);
+      const gameState = window.currentGameState || {};
+      console.log('DEBUG: Status passado para atualizarEndingScreen:', gameState.status);
+      // Exibir a palavra completa ao final do jogo
+      const palavraCompleta = gameState.original_word || (gameState.word_display ? gameState.word_display.replace(/ /g, '') : '');
+      atualizarEndingScreen(gameState.status, palavraCompleta);
+      showScreen('ending-screen');
+      // Opcional: resetar o formulário
+      input.value = '';
+      // Esconde o form novamente para o próximo jogo
+      const addWordOverlay = document.getElementById('add-word-overlay');
+      const addWordForm = document.getElementById('add-word-form');
+      if (addWordOverlay && addWordForm) {
+        addWordOverlay.style.display = '';
+        addWordForm.style.opacity = '0.3';
+        addWordForm.style.pointerEvents = 'none';
+        const addWordInput = document.getElementById('new-word-input');
+        if (addWordInput) {
+          addWordInput.disabled = true;
+        }
       }
     });
   }

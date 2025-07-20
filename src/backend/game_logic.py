@@ -42,5 +42,6 @@ class GameSession:
             "errors": self.errors,
             "max_errors": self.max_errors,
             "status": self.status,
-            "guessed_letters": list(self.guessed_letters)
+            "guessed_letters": list(self.guessed_letters),
+            "original_word": self.word
         }

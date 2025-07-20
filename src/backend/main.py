@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request
 from uuid import uuid4
 from fastapi.middleware.cors import CORSMiddleware
 from game_logic import GameSession
-from word_manager import get_random_word
+from word_manager import get_random_word, add_word_to_bank
 
 app = FastAPI()
 
@@ -67,3 +67,15 @@ async def get_status(session_id: str):
         return {"error": "Sessão não encontrada."}
 
     return {"game_state": game_session.get_game_state()}
+
+
+@app.post("/api/words/add")
+async def add_word(request: Request):
+    data = await request.json()
+    word = data.get("word")
+    if not word or not word.isalpha():
+        return {"error": "Palavra inválida."}
+    result = add_word_to_bank(word)
+    if result is False:
+        return {"error": f"A palavra '{word.lower()}' já existe no banco."}
+    return {"message": f"Palavra '{word}' adicionada como '{result}'", "difficulty": result}
