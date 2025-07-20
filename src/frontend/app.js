@@ -90,7 +90,7 @@ function atualizarEndingScreen(status, word) {
 
 // Refatorar botões de dificuldade para iniciar o jogo via backend
 function iniciarJogo(dificuldade) {
-  fetch('http://localhost:8000/api/game/start', {
+  fetch('http://localhost:8008/api/game/start', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ difficulty: dificuldade })
