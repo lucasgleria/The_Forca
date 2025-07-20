@@ -1,6 +1,7 @@
 import random
 import unicodedata
 import httpx
+import re
 
 # Dicionário com palavras por nível de dificuldade
 word_bank = {
@@ -47,17 +48,56 @@ def add_word_to_bank(word: str, hint: str):
     word_bank[difficulty].append({"palavra": word, "dica": hint})
     return difficulty 
 
+def is_valid_local_word(word: str) -> bool:
+    # Deve ter pelo menos 3 letras
+    if len(word) < 3:
+        return False
+    # Não pode ter caracteres não alfabéticos
+    if not word.isalpha():
+        return False
+    # Não pode ser uma sequência de letras repetidas (ex: aaaa, bbb)
+    if re.fullmatch(r'(\w)\1{2,}', word):
+        return False
+    # Não pode ter mais de 2 letras iguais em sequência
+    if re.search(r'(\w)\1{2,}', word):
+        return False
+    return True
+
 async def validate_word_exists(word: str) -> bool:
-    url = f"https://spell.toolforge.org/spellcheck/pt/{word}"
+    # Validação local
+    if not is_valid_local_word(word):
+        print(f"[VALIDACAO] Palavra '{word}' reprovada na validação local.")
+        return False
+    # Primeira tentativa: Spell Toolforge
+    url_spell = f"https://spell.toolforge.org/spellcheck/pt/{word}"
     try:
         async with httpx.AsyncClient() as client:
-            response = await client.get(url)
+            response = await client.get(url_spell)
             if response.status_code == 200:
                 data = response.json()
-                # Se não houver sugestões, a palavra existe
+                print(f"[VALIDACAO] Resposta Spell Toolforge: {data}")
+                # Se houver sugestões, a palavra é inválida
                 if data and isinstance(data, list) and len(data) > 1 and data[1].get("suggestion"):
-                    return False  # Palavra incorreta, há sugestões
-                return True  # Palavra correta
-    except Exception:
-        pass
+                    return False
+                # Se a palavra for igual ao input e não houver sugestões, é válida
+                if data and isinstance(data, list) and data[0] == word:
+                    return True
+    except Exception as e:
+        print(f"[VALIDACAO] Erro Spell Toolforge: {e}")
+    # Fallback: LanguageTool
+    url_lt = "https://api.languagetool.org/v2/check"
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(url_lt, data={"text": word, "language": "pt-BR"})
+            if response.status_code == 200:
+                data = response.json()
+                print(f"[VALIDACAO] Resposta LanguageTool: {data}")
+                # Se houver matches, a palavra é inválida
+                if data and isinstance(data, dict) and data.get("matches"):
+                    return False
+                # Se não houver matches, é válida
+                if data and isinstance(data, dict) and not data.get("matches"):
+                    return True
+    except Exception as e:
+        print(f"[VALIDACAO] Erro LanguageTool: {e}")
     return False 
