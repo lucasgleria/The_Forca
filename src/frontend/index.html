@@ -56,6 +56,11 @@
         </div>
         <!-- Área da palavra -->
         <div id="word-area" class="flex gap-1 sm:gap-2 text-2xl sm:text-3xl font-mono tracking-widest mb-2">_ _ _ _ _</div>
+        <!-- Botão e área de dica -->
+        <div class="flex flex-col items-center mb-2">
+          <button id="show-hint-btn" class="mb-1 px-4 py-1 bg-blue-700 rounded text-white font-semibold hover:bg-blue-800 transition">Ver dica</button>
+          <span id="hint-area" class="text-base text-blue-300 font-semibold hidden"></span>
+        </div>
         <!-- Teclado virtual -->
         <div id="keyboard" class="grid grid-cols-6 sm:grid-cols-9 gap-1 sm:gap-2 w-full max-w-md"></div>
         <!-- Botões extras: Nova palavra (placeholder com overlay) -->
@@ -65,8 +70,20 @@
           </div>
           <span class="text-white font-semibold block text-center w-full mb-2">O jogo terminou! Adicione uma nova palavra:</span>
           <div id="add-word-form" class="flex flex-col sm:flex-row gap-2 w-full p-2 justify-center items-center">
-            <input id="new-word-input" type="text" placeholder="Nova palavra" class="h-10 w-full sm:w-48 max-w-xs px-3 py-2 rounded bg-gray-700 text-white focus:outline-none" />
-            <button id="add-word-btn" class="h-10 w-full sm:flex-1 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 transition">Add a new word</button>
+            <div class="flex flex-col w-full sm:w-48 max-w-xs gap-2">
+              <input id="new-word-input" type="text" placeholder="Nova palavra" class="h-10 w-full px-3 py-2 rounded bg-gray-700 text-white focus:outline-none" />
+              <select id="hint-select" class="h-10 w-full px-3 py-2 rounded bg-gray-700 text-white focus:outline-none">
+                <option value="">Selecione a dica</option>
+                <option value="substantivo">Substantivo</option>
+                <option value="verbo">Verbo</option>
+                <option value="adjetivo">Adjetivo</option>
+                <option value="nome">Nome</option>
+                <option value="advérbio">Advérbio</option>
+                <option value="pronome">Pronome</option>
+                <option value="outro">Outro</option>
+              </select>
+            </div>
+            <button id="add-word-btn" class="h-20 w-full sm:h-20 sm:w-48 max-w-xs px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 transition self-center" disabled>Add a new word</button>
           </div>
         </div>
       </main>
@@ -74,12 +91,7 @@
       <aside class="hidden md:flex flex-col gap-4 w-32 md:w-56 bg-gray-800 bg-opacity-90 rounded-2xl shadow-xl p-4 h-fit mt-0">
         <div class="text-center text-base font-semibold mb-2">TENTATIVAS:</div>
         <div id="guesses-area" class="flex flex-wrap gap-2 justify-center">
-          <!-- Placeholder: Letras certas (verde) e erradas (vermelho) -->
-          <span class="py-2 px-2 sm:px-3 rounded font-bold text-base sm:text-lg text-white bg-green-600">A</span>
-          <span class="py-2 px-2 sm:px-3 rounded font-bold text-base sm:text-lg text-white bg-red-600">B</span>
-          <span class="py-2 px-2 sm:px-3 rounded font-bold text-base sm:text-lg text-white bg-green-600">E</span>
-          <span class="py-2 px-2 sm:px-3 rounded font-bold text-base sm:text-lg text-white bg-red-600">Z</span>
-          <span class="py-2 px-2 sm:px-3 rounded font-bold text-base sm:text-lg text-white bg-green-600">O</span>
+          <!-- Letras serão exibidas aqui -->
         </div>
       </aside>
     </div>

@@ -237,14 +237,13 @@
     - [ ] Opção 2: Ter várias imagens PNG/JPG do boneco em diferentes estágios de erro e trocar a `src` de uma `img` com base no `errors` do estado do jogo.
 - [ ] **Tarefa B4.2.2:** Adicionar animações e transições CSS suaves entre as telas (Menu, Jogo, Fim) para uma experiência mais fluida.
 - [ ] **Tarefa B4.2.3:** Estilizar os balões de "You won!" e "You were hanged!" com maior fidelidade ao template, incluindo a ponta do balão.
-- [ ] **Tarefa B4.2.4:** Adicionar validação básica de entrada no Frontend (ex: desabilitar botões de letras já tentadas, impedir entrada de caracteres não alfabéticos no campo de palpite).
-- [ ] **Tarefa B4.2.5:** Refinar o feedback visual para letras já tentadas no teclado virtual (cores diferentes para acerto/erro/tentada).
+- [x] **Tarefa B4.2.4:** Adicionar validação básica de entrada no Frontend (ex: desabilitar botões de letras já tentadas, impedir entrada de caracteres não alfabéticos no campo de palpite).
+- [x] **Tarefa B4.2.5:** Refinar o feedback visual para letras já tentadas no teclado virtual (cores diferentes para acerto/erro/tentada).
 
 #### Etapa 4.3: Refinamento da Lógica (Dev B com suporte ao Dev A)
 - [ ] **Tarefa B4.3.1:** Em `src/backend/main.py` e `game_logic.py`, adicionar tratamento de erros e validação de entrada mais robusta (ex: usar Pydantic models no FastAPI para validação de requisições).
-- [ ] **Tarefa B4.3.2:** Em `game_logic.py`, implementar uma lógica de pontuação simples (ex: `score = (len(word) * 100) - (errors * 50)`). Retornar a pontuação no `get_game_state()`.
-- [ ] **Tarefa A4.3.3 (Opcional):** Pesquisar e integrar com uma API de palavras externa para ter um vocabulário maior e mais dinâmico, se desejado.
-- [ ] **Tarefa B4.3.4 (Opcional):** Implementar funcionalidade de "Dica" (se houver no template), que revele uma letra em troca de uma penalidade de pontuação ou erro.
+- [ ] **Tarefa A4.3.2 (Opcional):** Pesquisar e integrar com uma API de palavras externa para ter um vocabulário maior e mais dinâmico, se desejado.
+- [ ] **Tarefa B4.3.3 (Opcional):** Implementar funcionalidade de "Dica" (se houver no template), que revele uma letra em troca de uma penalidade de pontuação ou erro.
 
 
 ### FASE 5: Testes e Deploy

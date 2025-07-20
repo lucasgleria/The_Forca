@@ -34,10 +34,27 @@ function showScreen(screenId, gameState) {
     atualizarPainelDificuldade();
     if (gameState) {
       gerarTecladoVirtual(gameState);
+      configurarBotaoDica(gameState);
     } else if (window.currentGameState) {
       gerarTecladoVirtual(window.currentGameState);
+      configurarBotaoDica(window.currentGameState);
     }
   }
+}
+
+function configurarBotaoDica(gameState) {
+  const btn = document.getElementById('show-hint-btn');
+  const hintArea = document.getElementById('hint-area');
+  if (!btn || !hintArea) return;
+  hintArea.classList.add('hidden');
+  btn.disabled = false;
+  btn.onclick = () => {
+    if (gameState && gameState.hint) {
+      hintArea.textContent = `Dica: ${gameState.hint}`;
+      hintArea.classList.remove('hidden');
+      btn.disabled = true;
+    }
+  };
 }
 
 // Função para atualizar a área da palavra
@@ -118,6 +135,7 @@ function iniciarJogo(dificuldade) {
       atualizarGuessesArea(gameState.guessed_letters, gameState.word_display.replace(/ /g, ''));
       showScreen('game-screen', gameState);
       gerarTecladoVirtual(gameState);
+      configurarBotaoDica(gameState);
     })
     .catch(err => {
       alert('Erro ao iniciar o jogo: ' + err);
@@ -161,6 +179,7 @@ function gerarTecladoVirtual(gameState) {
           atualizarBonecoSVG(gameState.errors);
           atualizarGuessesArea(gameState.guessed_letters, gameState.word_display.replace(/ /g, ''));
           gerarTecladoVirtual(gameState);
+          configurarBotaoDica(gameState);
           if (gameState.status === 'won' || gameState.status === 'lost') {
               if (gameState) {
                 window.currentGameState = gameState; // Salva o estado final do jogo
@@ -260,6 +279,23 @@ window.hideAllScreens = hideAllScreens;
 window.gerarTecladoVirtual = gerarTecladoVirtual;
 window.atualizarPainelDificuldade = atualizarPainelDificuldade;
 
+// Função para validar o formulário de nova palavra
+function validarFormNovaPalavra() {
+  const input = document.getElementById('new-word-input');
+  const select = document.getElementById('hint-select');
+  const btn = document.getElementById('add-word-btn');
+  if (!input || !select || !btn) return;
+  btn.disabled = !(input.value.trim() && select.value);
+}
+
+// Adicionar listeners para validar o formulário em tempo real
+function configurarValidacaoFormNovaPalavra() {
+  const input = document.getElementById('new-word-input');
+  const select = document.getElementById('hint-select');
+  if (input) input.addEventListener('input', validarFormNovaPalavra);
+  if (select) select.addEventListener('change', validarFormNovaPalavra);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   // Exibe o menu ao carregar
   showScreen('menu-screen');
@@ -301,9 +337,11 @@ document.addEventListener('DOMContentLoaded', () => {
     addWordBtn.addEventListener('click', async (e) => {
       e.preventDefault();
       const input = document.getElementById('new-word-input');
+      const select = document.getElementById('hint-select');
       const word = input.value.trim();
-      if (!word) {
-        alert('Digite uma palavra válida!');
+      const hint = select.value;
+      if (!word || !hint) {
+        alert('Digite uma palavra válida e selecione a dica!');
         return;
       }
       // Envia para o backend
@@ -311,7 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const res = await fetch('http://localhost:8000/api/words/add', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ word })
+          body: JSON.stringify({ word, hint })
         });
         const data = await res.json();
         if (data.error) {
@@ -332,6 +370,8 @@ document.addEventListener('DOMContentLoaded', () => {
       showScreen('ending-screen');
       // Opcional: resetar o formulário
       input.value = '';
+      select.value = '';
+      validarFormNovaPalavra();
       // Esconde o form novamente para o próximo jogo
       const addWordOverlay = document.getElementById('add-word-overlay');
       const addWordForm = document.getElementById('add-word-form');
@@ -346,4 +386,5 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+  configurarValidacaoFormNovaPalavra();
 });

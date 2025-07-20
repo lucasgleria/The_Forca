@@ -2,8 +2,9 @@ import random
 from typing import Set
 
 class GameSession:
-    def __init__(self, word: str, max_errors: int = 6):
+    def __init__(self, word: str, hint: str, max_errors: int = 6):
         self.word: str = word
+        self.hint: str = hint
         self.guessed_letters: Set[str] = set()
         self.errors: int = 0
         self.max_errors: int = max_errors
@@ -43,5 +44,6 @@ class GameSession:
             "max_errors": self.max_errors,
             "status": self.status,
             "guessed_letters": list(self.guessed_letters),
-            "original_word": self.word
+            "original_word": self.word,
+            "hint": self.hint
         }
