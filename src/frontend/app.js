@@ -44,12 +44,22 @@ function atualizarWordArea(wordDisplay) {
   }
 }
 
-// Função para atualizar o desenho da forca (placeholder: mostra número de erros)
-function atualizarHangmanDrawing(errors, maxErrors) {
-  const hangman = document.getElementById('hangman-drawing');
-  if (hangman) {
-    hangman.textContent = `Erros: ${errors} / ${maxErrors}`;
-  }
+// Função para mostrar partes do boneco conforme o número de erros
+function atualizarBonecoSVG(errors) {
+  const partes = [
+    'head',
+    'body',
+    'left-arm',
+    'right-arm',
+    'left-leg',
+    'right-leg'
+  ];
+  partes.forEach((id, idx) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.style.display = (errors > idx) ? '' : 'none';
+    }
+  });
 }
 
 // Função para atualizar painel de tentativas
@@ -100,7 +110,7 @@ function iniciarJogo(dificuldade) {
       sessionId = data.session_id;
       const gameState = data.game_state;
       atualizarWordArea(gameState.word_display);
-      atualizarHangmanDrawing(gameState.errors, gameState.max_errors);
+      atualizarBonecoSVG(gameState.errors);
       atualizarGuessesArea(gameState.guessed_letters, gameState.word_display.replace(/ /g, ''));
       showScreen('game-screen');
       gerarTecladoVirtual(gameState);
@@ -142,7 +152,7 @@ function gerarTecladoVirtual(gameState) {
           }
           const gameState = data.game_state;
           atualizarWordArea(gameState.word_display);
-          atualizarHangmanDrawing(gameState.errors, gameState.max_errors);
+          atualizarBonecoSVG(gameState.errors);
           atualizarGuessesArea(gameState.guessed_letters, gameState.word_display.replace(/ /g, ''));
           gerarTecladoVirtual(gameState);
           if (gameState.status === 'won' || gameState.status === 'lost') {

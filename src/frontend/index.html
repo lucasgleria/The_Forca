@@ -44,8 +44,23 @@
       </aside>
       <!-- Área principal do jogo -->
       <main class="flex-1 flex flex-col items-center gap-4 md:gap-6 w-full">
-        <!-- Desenho da forca (placeholder) -->
-        <div id="hangman-drawing" class="w-32 h-32 md:w-40 md:h-40 bg-gray-800 rounded-lg flex items-center justify-center mb-2">FORCA</div>
+        <!-- Desenho da forca (SVG minimalista, partes separadas) -->
+        <div id="hangman-drawing" class="w-32 h-32 md:w-40 md:h-40 bg-gray-800 rounded-lg flex items-center justify-center mb-2 p-1 overflow-visible">
+          <svg id="svg-hangman" viewBox="0 0 120 160" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <!-- Forca -->
+            <line x1="10" y1="150" x2="110" y2="150" stroke="#d1d5db" stroke-width="6" /> <!-- base -->
+            <line x1="30" y1="150" x2="30" y2="20" stroke="#d1d5db" stroke-width="6" /> <!-- poste -->
+            <line x1="30" y1="20" x2="80" y2="20" stroke="#d1d5db" stroke-width="6" /> <!-- topo -->
+            <line x1="80" y1="20" x2="80" y2="40" stroke="#d1d5db" stroke-width="4" /> <!-- corda -->
+            <!-- Boneco -->
+            <circle id="head" cx="80" cy="50" r="10" stroke="#f3f4f6" stroke-width="3" fill="none" style="display:none" />
+            <line id="body" x1="80" y1="60" x2="80" y2="100" stroke="#f3f4f6" stroke-width="3" style="display:none" />
+            <line id="left-arm" x1="80" y1="70" x2="65" y2="85" stroke="#f3f4f6" stroke-width="3" style="display:none" />
+            <line id="right-arm" x1="80" y1="70" x2="95" y2="85" stroke="#f3f4f6" stroke-width="3" style="display:none" />
+            <line id="left-leg" x1="80" y1="100" x2="70" y2="120" stroke="#f3f4f6" stroke-width="3" style="display:none" />
+            <line id="right-leg" x1="80" y1="100" x2="90" y2="120" stroke="#f3f4f6" stroke-width="3" style="display:none" />
+          </svg>
+        </div>
         <!-- Área da palavra -->
         <div id="word-area" class="flex gap-1 sm:gap-2 text-2xl sm:text-3xl font-mono tracking-widest mb-2">_ _ _ _ _</div>
         <!-- Teclado virtual -->
