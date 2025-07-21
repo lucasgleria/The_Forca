@@ -29,10 +29,9 @@ Este guia mostra como configurar o deploy automático do seu projeto usando **Re
 5. Preencha os campos:
    - **Name:** (ex: the-forca-backend)
    - **Root Directory:** `src/backend`
-   - **Environment:** Python 3.9+
    - **Build Command:** `pip install -r requirements.txt`
    - **Start Command:** `uvicorn main:app --host 0.0.0.0 --port 10000`
-   - **Port:** `10000` (ou mantenha o padrão 8000, mas ajuste o Start Command)
+   - **Instance Type:** Marque como hobby projects 
 6. Clique em **"Create Web Service"**.
 7. O Render irá instalar as dependências e iniciar o deploy automaticamente.
 8. Após o deploy, anote a URL pública do backend (ex: `https://the-forca-backend.onrender.com`).
@@ -47,10 +46,11 @@ Este guia mostra como configurar o deploy automático do seu projeto usando **Re
 2. Clique em **"Add New... > Project"**.
 3. Conecte sua conta do GitHub e importe o repositório.
 4. Configure:
+   - **Framework Preset:** `Other`
    - **Root Directory:** `src/frontend`
-   - **Framework Preset:** `Other` (ou `React` se for o caso)
-   - **Build Command:** `npm install && npm run build` (ou apenas `npm install` se não houver build)
-   - **Output Directory:** `src/frontend` ou `dist` (ajuste conforme seu build)
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `.`
+   - **Install command:** `npm install`
 5. Clique em **"Deploy"**.
 6. Após o deploy, anote a URL pública do frontend (ex: `https://the-forca-frontend.vercel.app`).
 
