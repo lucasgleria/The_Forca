@@ -241,9 +241,9 @@
 - [x] **Tarefa B4.2.5:** Refinar o feedback visual para letras já tentadas no teclado virtual (cores diferentes para acerto/erro/tentada).
 
 #### Etapa 4.3: Refinamento da Lógica (Dev B com suporte ao Dev A)
-- [ ] **Tarefa B4.3.1:** Em `src/backend/main.py` e `game_logic.py`, adicionar tratamento de erros e validação de entrada mais robusta (ex: usar Pydantic models no FastAPI para validação de requisições).
-- [ ] **Tarefa A4.3.2 (Opcional):** Pesquisar e integrar com uma API de palavras externa para ter um vocabulário maior e mais dinâmico, se desejado.
-- [ ] **Tarefa B4.3.3 (Opcional):** Implementar funcionalidade de "Dica" (se houver no template), que revele uma letra em troca de uma penalidade de pontuação ou erro.
+- [x] **Tarefa B4.3.1:** Em `src/backend/main.py` e `game_logic.py`, adicionar tratamento de erros e validação de entrada mais robusta (ex: usar Pydantic models no FastAPI para validação de requisições).
+- [x] **Tarefa A4.3.2 (Opcional):** Pesquisar e integrar com uma API de palavras externa para ter um vocabulário maior e mais dinâmico, se desejado.
+- [x] **Tarefa B4.3.3 (Opcional):** Implementar funcionalidade de "Dica" (se houver no template), que revele uma letra em troca de uma penalidade de pontuação ou erro.
 
 
 ### FASE 5: Testes e Deploy
@@ -253,11 +253,10 @@
 #### Etapa 5.1: Testes (Dev B - Líder, Dev A - Executor)
 - [ ] **Tarefa B5.1.1:** Criar testes unitários básicos para a lógica do Backend (funções em `word_manager.py`, métodos da classe `GameSession` em `game_logic.py`). Usar `pytest`.
 - [ ] **Tarefa B5.1.2:** Realizar testes manuais de ponta a ponta:
-    - [ ] Verificar o fluxo completo do jogo (Menu -> Jogo -> Vitória/Derrota -> Ranking).
-    - [ ] Testar todas as dificuldades.
-    - [ ] Testar casos de erro (tentar letras repetidas, caracteres inválidos, esgotar erros).
-    - [ ] Verificar a responsividade em diferentes tamanhos de tela (desktop, tablet, mobile) e orientações.
-    - [ ] Testar a persistência do ranking.
+    - [x] Verificar o fluxo completo do jogo (Menu -> Jogo -> Vitória/Derrota).
+    - [x] Testar todas as dificuldades.
+    - [x] Testar casos de erro (tentar letras repetidas, caracteres inválidos, esgotar erros).
+    - [x] Verificar a responsividade em diferentes tamanhos de tela (desktop, tablet, mobile) e orientações.
 - [ ] **Tarefa A5.1.3:** Executar testes de funcionalidade conforme roteiro detalhado fornecido pelo Dev B, reportando quaisquer bugs ou inconsistências.
 - [ ] **Tarefa B5.1.4:** Correção de bugs encontrados durante os testes.
 
