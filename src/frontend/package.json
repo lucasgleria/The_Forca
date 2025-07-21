@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build:css": "sass styles/style.scss styles/style.css --watch",
-    "start:server": "python -m http.server 8008",
+    "build:css": "sass styles/style.scss styles/style.css",
+    "build:tailwind": "npx tailwindcss -i ./styles/style.scss -o ./styles/style.css",
+    "build": "npm run build:css && npm run build:tailwind",
     "start:css": "npx tailwindcss -i ./styles/style.scss -o ./styles/style.css --watch",
-    "start:all": "concurrently \"npm run start:server\" \"npm run start:css\""
+    "start:all": "concurrently \"npm run start:css\""
   },
   "keywords": [],
   "author": "",

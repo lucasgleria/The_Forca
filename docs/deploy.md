@@ -56,6 +56,7 @@ Este guia mostra como configurar o deploy automático do seu projeto usando **Re
 
 > **Dica:** Toda vez que fizer push na branch main, o Vercel fará o deploy automático.
 
+
 ---
 
 ## Dicas e Manutenção
