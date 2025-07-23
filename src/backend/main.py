@@ -36,7 +36,9 @@ app = FastAPI()
 # Configuração do CORS para permitir acesso do frontend
 origins = [
     "http://localhost:8008",
-    "http://127.0.0.1:8008"
+    "http://127.0.0.1:8008",
+    "https://the-forca-frontend.vercel.app",
+    "https://the-forca-backend.onrender.com"
 ]
 
 app.add_middleware(
