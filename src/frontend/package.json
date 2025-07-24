@@ -5,7 +5,12 @@
   "scripts": {
     "build:css": "sass styles/style.scss styles/style.css",
     "build:tailwind": "npx tailwindcss -i ./styles/style.scss -o ./styles/style.css",
-    "build": "npm run build:css && npm run build:tailwind",
+    
+    "copy-assets": "mkdir -p dist && cp index.html dist/index.html && cp app.js dist/app.js && cp styles/style.css dist/styles/style.css && cp -R assets dist/assets || true", 
+    "inject-env": "sed -i 's|\\$VITE_APP_API_URL|'$VITE_APP_API_URL'|g' dist/index.html",
+    
+    "build": "npm run build:css && npm run build:tailwind && npm run copy-assets && npm run inject-env",
+    
     "start:css": "npx tailwindcss -i ./styles/style.scss -o ./styles/style.css --watch",
     "start:all": "concurrently \"npm run start:css\""
   },
