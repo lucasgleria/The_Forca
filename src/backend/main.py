@@ -37,7 +37,7 @@ app = FastAPI()
 origins = [
     "http://localhost:8008",
     "http://127.0.0.1:8008",
-    "https://the-forca-frontend.vercel.app",
+    "https://the-forca.vercel.app",
     "https://the-forca-backend.onrender.com"
 ]
 
