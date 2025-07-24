@@ -4,6 +4,8 @@ const menuScreen = document.getElementById('menu-screen');
 const gameScreen = document.getElementById('game-screen');
 const endingScreen = document.getElementById('ending-screen');
 
+const API_BASE_URL = import.meta.env.VITE_APP_API_URL || "http://localhost:8000";
+
 // Estado global da dificuldade
 let currentDifficulty = 'easy';
 const difficulties = [
@@ -121,7 +123,7 @@ function atualizarEndingScreen(status, word) {
 
 // Refatorar botões de dificuldade para iniciar o jogo via backend
 function iniciarJogo(dificuldade) {
-  fetch('http://localhost:8000/api/game/start', {
+  fetch(`${API_BASE_URL}/api/game/start`, { 
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ difficulty: dificuldade })
@@ -163,7 +165,7 @@ function gerarTecladoVirtual(gameState) {
       btn.disabled = true;
       btn.classList.add('opacity-50', 'cursor-not-allowed');
       if (!sessionId) return;
-      fetch('http://localhost:8000/api/game/guess', {
+      fetch(`${API_BASE_URL}/api/game/guess`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ session_id: sessionId, letter: letra })
@@ -346,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       // Envia para o backend
       try {
-        const res = await fetch('http://localhost:8000/api/words/add', {
+        const res = await fetch(`${API_BASE_URL}/api/words/add`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ word, hint })
