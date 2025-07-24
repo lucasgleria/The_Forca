@@ -66,7 +66,7 @@ Este guia mostra como configurar o deploy automático do seu projeto usando **Re
 - **Domínio personalizado:** Tanto Render quanto Vercel permitem adicionar domínio próprio gratuitamente.
 - **Limitações:** Serviços gratuitos podem dormir após inatividade ou ter limites de uso.
 
----
+----
 
 ## Referências
 - [Documentação Render](https://render.com/docs)
