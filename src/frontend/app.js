@@ -6,7 +6,9 @@ const endingScreen = document.getElementById('ending-screen');
 
 // const API_BASE_URL = import.meta.env.VITE_APP_API_URL || "http://localhost:8000";
 
-const API_BASE_URL = window.GLOBAL_API_BASE_URL || "http://localhost:8000";
+// const API_BASE_URL = window.GLOBAL_API_BASE_URL || "http://localhost:8000";
+
+const API_BASE_URL = "https://the-forca-backend.onrender.com";
 
 // Estado global da dificuldade
 let currentDifficulty = 'easy';
